@@ -7,19 +7,33 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+
+const allowedOrigins = [
+    'http://localhost:5173', 
+    'https://fullstack-beyons-chats-assignment.vercel.app' 
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+       
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
+// ----------------------------------
+
 app.use(express.json());
 
-// Base Route for testing if API is alive
 app.get('/', (req, res) => {
     res.json({ message: "BeyondChats AI Automation API is live!" });
 });
 
-// Routes - All article and automation logic is bundled here
 app.use('/api/articles', articleRoutes);
 
-// Global Error Handler (Industry Standard)
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something went wrong on the server!' });
