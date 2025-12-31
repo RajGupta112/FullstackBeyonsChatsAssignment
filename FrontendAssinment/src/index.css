@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  /* This replaces the old tailwind.config.js 'theme' section */
+  --color-brand-primary: #4f46e5;
+  --color-brand-secondary: #10b981;
+  
+  /* You can even add custom breakpoints or fonts here */
+  --breakpoint-3xl: 1920px;
+}
+
+/* Optional: Keep standard global styles below */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
